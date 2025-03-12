@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quelpoke-nicolasa
+  namespace: quelpoke-angotliath
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quelpoke-nicolasa
+  template:
+    metadata:
+      labels:
+        app: quelpoke-nicolasa
+    spec:
+      containers:
+      - name: quelpoke-nicolasa
+        image: europe-west9-docker.pkg.dev/cs-poc-hpzdycpiqjyvinhrczvlwcn/student-nicolasa/quelpoke:latest
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quelpoke-nicolasa-service
+  namespace: quelpoke-angotliath
+spec:
+  selector:
+    app: quelpoke-nicolasa
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
