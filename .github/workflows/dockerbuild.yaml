@@ -38,3 +38,16 @@ jobs:
       - name: Push Docker image to Google Artifact Registry
         run: |
           docker push europe-west9-docker.pkg.dev/cs-poc-hpzdycpiqjyvinhrczvlwcn/student-nicolasa/quelpoke:latest
+
+
+      - name: DL de plugin auth
+        run: |
+          gcloud components install gke-cloud-auth-plugin
+
+      - name: Connecter au cluster
+        run: |
+          gcloud container clusters get-credentials quelpoke-clone-1 --region europe-west10
+
+      - name: Deployer l'appli
+        run: |
+          kubectl apply -f ./deploy.yaml
